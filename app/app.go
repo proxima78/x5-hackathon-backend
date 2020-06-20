@@ -13,8 +13,9 @@ import (
 )
 
 type App struct {
-	Config *config.Config
-	DB     *mongo.Client
+	Config   *config.Config
+	DBClient *mongo.Client
+	DB       *mongo.Database
 
 	server *http.Server
 }
@@ -52,7 +53,8 @@ func (app *App) createMongoDBConnection(config *config.MongoDB) error {
 		return err
 	}
 
-	app.DB = client
+	app.DBClient = client
+	app.DB = client.Database(app.Config.MongoDB.DatabaseName)
 	return nil
 }
 
@@ -71,6 +73,6 @@ func (app *App) Run(r *mux.Router) {
 
 func (app *App) Destroy() {
 	ctx := context.Background()
-	_ = app.DB.Disconnect(ctx)
+	_ = app.DBClient.Disconnect(ctx)
 	_ = app.server.Shutdown(ctx)
 }
