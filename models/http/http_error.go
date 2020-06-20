@@ -1,8 +1,8 @@
 package http
 
 type HTTPError struct {
-	ErrorCode int
-	Error     ErrorMessage `json:"error"`
+	//ErrorCode int
+	Error ErrorMessage `json:"error"`
 }
 
 type ErrorMessage struct {

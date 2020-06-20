@@ -4,11 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	httpModels "github.com/proxima78/x5-hackathon-backend/models/http"
 )
 
 func ReturnHTTPError(w http.ResponseWriter, err string, code int) {
 	res := httpModels.HTTPError{
-		Error: models.HTTPErrorMessage{
+		Error: httpModels.ErrorMessage{
 			Message: err,
 		},
 	}
